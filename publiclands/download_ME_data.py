@@ -67,3 +67,5 @@ extract = maine_conserved_lands[
     ]
 ]
 extract.to_file("../data/public_lands_me.gpkg", driver="GPKG")
+
+# %%
