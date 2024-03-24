@@ -9,12 +9,21 @@ source = (
 )
 # %%
 padus = gpd.read_file("../data/PADUS3_0Geopackage.gpkg")
+
+
 # %%
+def now():
+    from datetime import datetime
+
+    return datetime.now().isoformat()
+
 
 padus["accessibility_source"] = source
-padus["accessibility_retrieval_date"] = "2024-03-24"
+padus["accessibility_retrieval_date"] = now()
 padus["accessibility_owner"] = padus["Loc_Own"]
 padus["accessibility_site_name"] = padus["Loc_Nm"]
+
+# %%
 
 
 # %%
@@ -44,6 +53,9 @@ extract = padus[
         "geometry",
     ]
 ]
+# filter out where geometry.area is over 1000.  There are some coding errors in the data
+
+extract = extract[extract.geometry.area < 1000]
 extract.to_file("../data/public_lands_padus.gpkg", driver="GPKG")
 
 # %%
